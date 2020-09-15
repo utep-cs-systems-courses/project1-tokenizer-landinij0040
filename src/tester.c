@@ -62,7 +62,7 @@ static char *test_tokenize() {
 
 /* History test cases */
 static char *test_add_history() {
-    List* list = init_history();
+    List *list = init_history();
     add_history(list, "happy");
     mu_assert("add_history(list, 'happy')", strcmp(list->root->str, "happy") == 0);
     add_history(list, "joy");
