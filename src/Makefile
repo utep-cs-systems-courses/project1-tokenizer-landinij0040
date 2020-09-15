@@ -1,10 +1,7 @@
 # all objects
-OBJS = tester.o main.o
-
+OBJS =  main.o
 # flags
-CFLAGS =-g -03 # -g for debug, -03 for optimization
-
-
+CFLAGS =-g -O3 # -g for debug, -03 for optimization
 # first production
 all: tokenizer
 
@@ -20,4 +17,5 @@ clean:
 	rm -f *.o tokenizer
 
 # Running Program
-run: tokenizer
+run:
+	./tokenizer
