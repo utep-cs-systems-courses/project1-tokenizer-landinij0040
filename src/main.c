@@ -16,13 +16,13 @@ int main()
   // printf(">");
   // scanf("%[^\n]",s);
   // printf("%s",   s);
-  char s[] = "word ";
-  char *t = word_terminator(&s[0]);
-  printf("After Word Terminate %s\n",&t[0]);
-  //printf("%d\n", *t == '\0');
-  //int i = count_words(&s[0]);
+  char s[] = "Hello world string";
+  tokenize(s);
+
+  return 0;
   
-  
+
+  return 0;
 }
 
 /* true if c is a tab or space */
@@ -33,7 +33,6 @@ int space_char(char c)
   else
     return 0;
 }
-
 /* true if c is a NON tab or space */
 int non_space_char(char c)
 {
@@ -58,19 +57,49 @@ char *word_start(char *str)
   }
   return str;
 }
-
 char *word_terminator(char *word)
 {
-  while(! space_char(*word++))
-	;
+  for(; *word != '\0'; word++){
+    if(space_char(*word)){
+      break;
+    }
+  }
   return word;
 }
 
 int count_words(char *str){
-  printf("Be foreloop: %s\n", &str[0]);// TODO: Delete Later
-  while(*str != '\0' ){
-    str = word_start(&str[0]);
-    printf("%s\n", &str[0]);
+  int i = 0;
+  while( (*str != '\0')){
+    i++;
+    str = word_start(     &str[0]);
+    str = word_terminator(&str[0]);
   }
-  return 0;
+  return i;
+}
+
+char *copy_str(char *inStr, short len)
+{
+  // Allocating String
+  char *allocedStr = malloc(len * sizeof(char) + 1);
+
+  // Putting input string into allocated string
+  for(int i = 0; i < len; i++ ){
+    allocedStr[i] = inStr[i];
+  }
+
+  // Expliclty putting the zero terminator at the end of the char string
+  allocedStr[len] = '\0';
+
+  return allocedStr;
+}
+
+char **tokenize(char *str)
+{
+  // Make Return Pointer That Points to a Pointer
+  char **tokVect;
+
+  // While loop till found Zero Terminator
+  while(*str != '\0'){
+    
+  }
 }
