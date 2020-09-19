@@ -16,12 +16,16 @@ int main()
   // printf(">");
   // scanf("%[^\n]",s);
   // printf("%s",   s);
-  char s[] = "Hello world string";
-  tokenize(s);
+  char s[] = " Hello world string";
+  char **p = tokenize(s);
+  printf("%p\n",p);
+  printf("%p\n",p+1);
+  printf("%p\n", p+2);
 
-  return 0;
+  printf("%s\n", *(p+2));
+
+
   
-
   return 0;
 }
 
@@ -95,11 +99,29 @@ char *copy_str(char *inStr, short len)
 
 char **tokenize(char *str)
 {
+  // Amount of words in the string
+  int amountWords = count_words(str);
+  
+  // Make Pointer Array
+  char *tokArray[amountWords + 1];
+  printf("The tokArray address%p\n",&tokArray);//TODO: Delete
+  
   // Make Return Pointer That Points to a Pointer
   char **tokVect;
 
-  // While loop till found Zero Terminator
-  while(*str != '\0'){
-    
+  // Make ending Pointer for passing how long a word in the string is
+  char *end;
+  
+  for(int i = 0; i < amountWords; i++){
+    str = word_start(str);
+    end = word_terminator(str);
+    tokArray[i] = copy_str(str, end - str);
+    printf("Address of tokArray %d : %p\n",i,&tokArray[i]);
+    printf("Value of tokArray %d : %s\n",i,tokArray[i]);
+    str = end;
   }
+  tokArray[amountWords] = NULL;
+  tokVect = &tokArray[0];
+  printf("%p\n",tokVect);
+  return tokVect;
 }
