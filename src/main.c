@@ -12,19 +12,9 @@ char *word_start(char *str);
 int count_words(char *str);
 int main()
 {
-  // char s[50];
-  // printf(">");
-  // scanf("%[^\n]",s);
-  // printf("%s",   s);
-  char s[] = " Hello world string";
+  char s[] = " Hello token yeag";
   char **p = tokenize(s);
-  printf("%p\n",p);
-  printf("%p\n",p+1);
-  printf("%p\n", p+2);
-
-  printf("%s\n", *(p+2));
-
-
+  print_tokens(p);
   
   return 0;
 }
@@ -102,12 +92,8 @@ char **tokenize(char *str)
   // Amount of words in the string
   int amountWords = count_words(str);
   
-  // Make Pointer Array
-  char *tokArray[amountWords + 1];
-  printf("The tokArray address%p\n",&tokArray);//TODO: Delete
-  
   // Make Return Pointer That Points to a Pointer
-  char **tokVect;
+  char **tokVect = malloc(sizeof(char *) * (amountWords + 1));
 
   // Make ending Pointer for passing how long a word in the string is
   char *end;
@@ -115,13 +101,16 @@ char **tokenize(char *str)
   for(int i = 0; i < amountWords; i++){
     str = word_start(str);
     end = word_terminator(str);
-    tokArray[i] = copy_str(str, end - str);
-    printf("Address of tokArray %d : %p\n",i,&tokArray[i]);
-    printf("Value of tokArray %d : %s\n",i,tokArray[i]);
+    tokVect[i] = copy_str(str, end - str);
     str = end;
   }
-  tokArray[amountWords] = NULL;
-  tokVect = &tokArray[0];
-  printf("%p\n",tokVect);
+  tokVect[amountWords] = NULL;
   return tokVect;
+}
+
+void print_tokens(char **tokens){
+  do{
+    printf("%s\n", *tokens++);
+  }while(*tokens != NULL );
+  
 }
