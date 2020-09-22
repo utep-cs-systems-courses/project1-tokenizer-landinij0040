@@ -10,7 +10,6 @@ typedef struct s_Item {
 typedef struct s_List {
   struct s_Item *root;
 } List;
-
 /* Initialize the linked list to keep the history. */
 List* init_history();
 

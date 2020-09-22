@@ -4,18 +4,24 @@
 #include "history.h"
 
 #define MAXWORD 100
-
-
-int space_char(char c);
-int non_space_char(char c);
-char *word_start(char *str);
-int count_words(char *str);
 int main()
 {
-  char s[] = " Hello token yeag";
-  char **p = tokenize(s);
-  print_tokens(p);
-  
+  // int while_exit = 1;
+  //while(while_exit){ // the menu
+  // printf(">");
+  // char s[MAXWORD];
+  // scanf("%[^\n]", s);
+  // if(*s == '!'){ // To quit or find a token
+  //   if(*(s + 1) =='q'){ // To quit
+  //	while_exit = 0;
+  //  }else{ // To bring back a token
+  //	printf("For finding the tokens");
+  //  }
+  // }else{ // to put into history
+  //  printf("Put String to history");
+  //  List *linked_list = init_history();
+  // }
+
   return 0;
 }
 
@@ -102,15 +108,29 @@ char **tokenize(char *str)
     str = word_start(str);
     end = word_terminator(str);
     tokVect[i] = copy_str(str, end - str);
+    printf("This is tokVect [i]%p\n", tokVect[i]);
     str = end;
   }
   tokVect[amountWords] = NULL;
+
   return tokVect;
 }
 
-void print_tokens(char **tokens){
+void print_tokens(char **tokens)
+{
   do{
     printf("%s\n", *tokens++);
-  }while(*tokens != NULL );
+  }while(*tokens != NULL );  
+}
+
+void free_tokens(char **tokens)
+{
+  int i = 0;
+  do{
+    free(*(tokens + i));
+    i++;
+  }while(*(tokens + i) != NULL);
+  free(*(tokens + i));
   
+  free(tokens);
 }

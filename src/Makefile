@@ -1,5 +1,5 @@
 # all objects
-OBJS =  main.o
+OBJS = main.o history.o
 # flags
 CFLAGS =-g -O3 # -g for debug, -03 for optimization
 # first production
