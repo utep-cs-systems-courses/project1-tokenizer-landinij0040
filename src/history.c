@@ -69,7 +69,6 @@ void print_history(List *list)
 
 void recursive_free_node(Item *node)
 {
-  printf("in the recursive function%d\n", node -> id);
   if((node -> next) == NULL){
     free(node);
     return ;
@@ -81,7 +80,10 @@ void recursive_free_node(Item *node)
 void free_history(List *list)
 {
   Item *node = list -> root;
-  recursive_free_node(node);
+  if(node != NULL){
+    recursive_free_node(node);
+  }
+  
   free(list);
 
 }

@@ -3,25 +3,58 @@
 #include "tokenizer.h"
 #include "history.h"
 
-#define MAXWORD 100
-int main()
-{
-  // int while_exit = 1;
-  //while(while_exit){ // the menu
-  // printf(">");
-  // char s[MAXWORD];
-  // scanf("%[^\n]", s);
-  // if(*s == '!'){ // To quit or find a token
-  //   if(*(s + 1) =='q'){ // To quit
-  //	while_exit = 0;
-  //  }else{ // To bring back a token
-  //	printf("For finding the tokens");
-  //  }
-  // }else{ // to put into history
-  //  printf("Put String to history");
-  //  List *linked_list = init_history();
-  // }
+int main(){
+  // Variable used to exit the while loop
+  int whileChecker = 1;
 
+  // Make Linked List
+  List *linked_list = init_history();
+
+  // The menu
+  while(whileChecker){
+    char s[50];
+    // Instructions
+    printf("PRESS:\n");
+    printf("!q to quit:\n");
+    printf("!h to view your history\n");
+    printf("!<number> to pick a specific history node\n");
+    printf("Enter your string otherwise\n\n");
+    printf(">");
+    scanf("%[^\n]",s);
+    // To clear the buffer
+    while((getchar()) != '\n');
+    if(*s == '!'){ // Special key word
+      if(*(s+1) == 'q' ){ // Quit the program
+	// Making whileChecker 0 to exit program
+	whileChecker = 0;
+	// Freeing the history
+	free_history(linked_list);
+      }else if(*(s+1) == 'h'){ // Print what is inside the history
+	print_history(linked_list);
+	
+      }else{ // Get history at specific node
+	int number = atoi(s+1);
+	char *gotString = get_history(linked_list, number);
+	//TODO: Print the string from reterive histroy here
+	printf("%s\n",gotString);
+	//TODO: Tokenize the string here
+	char **token = tokenize(gotString);
+	//TODO: Print the tokenized string here
+	print_tokens(token);
+	//TODO: Free the vector
+	free_tokens(token);
+      }
+    }else{
+      printf("%s\n",s);
+      printf("--------\n");
+      char **token = tokenize(s);
+      print_tokens(token);
+      printf("\n");
+      free_tokens(token);
+      add_history(linked_list, s);
+      
+    }
+  }
   return 0;
 }
 
@@ -108,7 +141,6 @@ char **tokenize(char *str)
     str = word_start(str);
     end = word_terminator(str);
     tokVect[i] = copy_str(str, end - str);
-    printf("This is tokVect [i]%p\n", tokVect[i]);
     str = end;
   }
   tokVect[amountWords] = NULL;
