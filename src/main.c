@@ -12,7 +12,7 @@ int main(){
 
   // The menu
   while(whileChecker){
-    char s[50];
+    char *s = malloc(sizeof(char) * 50); 
     // Instructions
     printf("PRESS:\n");
     printf("!q to quit:\n");
@@ -20,9 +20,8 @@ int main(){
     printf("!<number> to pick a specific history node\n");
     printf("Enter your string otherwise\n\n");
     printf(">");
-    scanf("%[^\n]",s);
-    // To clear the buffer
-    while((getchar()) != '\n');
+    // For user input
+    fgets(s, 50, stdin);
     if(*s == '!'){ // Special key word
       if(*(s+1) == 'q' ){ // Quit the program
 	// Making whileChecker 0 to exit program
@@ -31,30 +30,38 @@ int main(){
 	free_history(linked_list);
       }else if(*(s+1) == 'h'){ // Print what is inside the history
 	print_history(linked_list);
-	
       }else{ // Get history at specific node
 	int number = atoi(s+1);
 	char *gotString = get_history(linked_list, number);
-	//TODO: Print the string from reterive histroy here
+	// Print the string from reterived histroy here
 	printf("%s\n",gotString);
-	//TODO: Tokenize the string here
+	// Tokenize the string here
 	char **token = tokenize(gotString);
-	//TODO: Print the tokenized string here
+	// Print the tokenized string here
 	print_tokens(token);
-	//TODO: Free the vector
+	// Free the vector
 	free_tokens(token);
       }
-    }else{
+    }else{ // Put string into Linked List
       printf("%s\n",s);
       printf("--------\n");
-      char **token = tokenize(s);
+      // Allocating Memory
+      char *copied_string;
+      int numChar = 0;
+      // Get length of the string that the user put in 
+      while(*(s+numChar) != '\0'){
+	numChar++;
+      }
+      // Copy the string
+      copied_string = copy_str(s, numChar);
+      // Tokenize
+      char **token = tokenize(copied_string);
       print_tokens(token);
       printf("\n");
       free_tokens(token);
-      add_history(linked_list, s);
-      
+      add_history(linked_list, copied_string);    
     }
-  }
+  }  
   return 0;
 }
 
@@ -90,6 +97,8 @@ char *word_start(char *str)
   }
   return str;
 }
+
+/* Returns a pointer to the first space of the string */
 char *word_terminator(char *word)
 {
   for(; *word != '\0'; word++){
@@ -100,6 +109,7 @@ char *word_terminator(char *word)
   return word;
 }
 
+/* Counts words on a string */
 int count_words(char *str){
   int i = 0;
   while( (*str != '\0')){
@@ -110,6 +120,7 @@ int count_words(char *str){
   return i;
 }
 
+/* Copy the string to a block of memory */
 char *copy_str(char *inStr, short len)
 {
   // Allocating String
@@ -126,6 +137,7 @@ char *copy_str(char *inStr, short len)
   return allocedStr;
 }
 
+/* Tokenize method */
 char **tokenize(char *str)
 {
   // Amount of words in the string
@@ -148,6 +160,7 @@ char **tokenize(char *str)
   return tokVect;
 }
 
+/* Print the Tokens in a token vector */
 void print_tokens(char **tokens)
 {
   do{
@@ -155,6 +168,7 @@ void print_tokens(char **tokens)
   }while(*tokens != NULL );  
 }
 
+/* Free the tokens in the token vector */
 void free_tokens(char **tokens)
 {
   int i = 0;

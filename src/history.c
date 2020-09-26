@@ -53,8 +53,6 @@ char *get_history(List *list, int id)
     currentNodeId++;
   }
   return item -> str;
-
-
 }
 
 void print_history(List *list)

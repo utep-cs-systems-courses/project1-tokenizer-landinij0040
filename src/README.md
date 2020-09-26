@@ -1,12 +1,25 @@
 Project 1: Tokenizer
+## By Isaiah Landin
 ====================
 # Instructions:
 
-You should document your tokenizer in this file.
+## To complie the Program
+type: ` make `
 
-This file is written in the refreshingly simple `markdown` text
-formatting language.
+## To run the Program
+type: ` make run `
 
-To learn about text formatting using markdown, we encourage you to examine 
- - [../README.md](../README.md)
- - the online [Markdown Guide](https://www.markdownguide.org/).
+## In the program
+
+- To Enter a String
+  - type: ` Your String `
+
+- To See the history of your string
+  - type: ` !h `
+
+- To select a specific node of history
+  - type: `!<number of histrory node>`
+
+- To quit the program
+  - type: `!q `
+
